@@ -1,3 +1,18 @@
+This react app is created by using "npm init create-app"
+
+In order to host the server locally, you will need to install npm and node first. 
+
+Make sure Homebrew has the latest version of the Node package.
+### $brew update
+
+Use homebrew to install node and npm (both of them will be installed)
+### $brew install node
+
+Make sure you have them installed correctly
+### $node -v
+### $npm -v
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
