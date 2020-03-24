@@ -8,7 +8,13 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Hello there! Welcome to our page! -- Team ByteMe
+          Hello there! Welcome to our page!
+        </p>
+        <p>
+        This is the initial set up for testing. If you can see the message, the project is hosted on AWS successfully.
+        </p>
+        <p>
+          -- Team ByteMe
         </p>
  
       </header>
