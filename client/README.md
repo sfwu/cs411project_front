@@ -1,3 +1,5 @@
+## General Set Up Description
+
 This react app is created by using "npm init create-app"
 
 In order to host the server locally, you will need to install npm and node first. 
