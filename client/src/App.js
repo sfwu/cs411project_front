@@ -1,24 +1,13 @@
 import React from 'react';
-
-import { BrowserRouter as Router, Route,Switch, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 
-import Register from './pages/registration/index';
 import history from './components/history/history'
 
 
 
 export default class mainPage extends React.Component {
-
-
-handleRegister = () => {
-    history.push('/registration');
-}
-
-
-
 
   render() {
 
@@ -50,7 +39,7 @@ handleRegister = () => {
 
           <div className='buttons'>
             <div>
-              <Button variant="primary" size="lg">
+              <Button variant="primary" size="lg" onClick = {() => history.push('/home')} >
                 Login
               </Button>
             </div>

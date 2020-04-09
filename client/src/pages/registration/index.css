@@ -1,0 +1,34 @@
+.r_main {
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+  
+.r_title{
+position: absolute;
+top: 70px;
+color: pink;
+font-size: 40px;
+}
+
+.r_inputs{
+position: absolute;
+top: 160px;
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 500px;
+}
+
+.r_buttons{
+position: relative;
+width: 350px;
+display: flex;
+justify-content: space-evenly;
+}
