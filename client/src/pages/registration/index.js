@@ -48,7 +48,7 @@ export default class register extends React.Component {
           <br />
 
           <div>
-              <Button variant="primary" size="lg" >
+              <Button variant="primary" size="lg" className ='r_buttons' >
               Submit
               </Button>
             </div>

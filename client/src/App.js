@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 
 import history from './components/history/history'
@@ -12,14 +12,14 @@ export default class mainPage extends React.Component {
   render() {
 
      return (
-        <div className='App'>
+        <div className='welcome-page'>
 
-          <header className='header'>
+          <header className='welcome-page-title'>
             Welcome to ByteMe's world!
           </header>
           <br />
 
-          <div className = 'inputs'>
+          <div className = 'welcome-page-inputs'>
             <InputGroup size="lg">
               <InputGroup.Prepend>
                 <InputGroup.Text id="inputGroup-sizing-lg">User name</InputGroup.Text>
@@ -37,7 +37,7 @@ export default class mainPage extends React.Component {
           
           <br />
 
-          <div className='buttons'>
+          <div className='welcome-page-buttons'>
             <div>
               <Button variant="primary" size="lg" onClick = {() => history.push('/home')} >
                 Login

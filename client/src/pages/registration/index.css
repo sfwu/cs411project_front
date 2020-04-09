@@ -28,6 +28,7 @@ width: 500px;
 
 .r_buttons{
 position: relative;
+top: 50px;
 width: 350px;
 display: flex;
 justify-content: space-evenly;
