@@ -59,7 +59,7 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Username
+                              NetID
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -76,7 +76,7 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email address
+                              Password
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -112,6 +112,25 @@ export default class Profile extends React.Component {
                               htmlFor="input-last-name"
                             >
                               Last name
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue="lannister"
+                              id="input-last-name"
+                              placeholder="Last name"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                      <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-last-name"
+                            >
+                              Email address
                             </label>
                             <Input
                               className="form-control-alternative"

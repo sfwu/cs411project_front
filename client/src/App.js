@@ -22,7 +22,7 @@ export default class mainPage extends React.Component {
           <div className = 'welcome-page-inputs'>
             <InputGroup size="lg">
               <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-lg">User name</InputGroup.Text>
+                <InputGroup.Text id="inputGroup-sizing-lg">NetID</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
             </InputGroup>
