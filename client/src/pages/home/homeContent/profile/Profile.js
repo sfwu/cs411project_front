@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { profileUpdate } from '../../../../components/userFunction';
 
 //deal with nodejs
 
@@ -20,19 +21,54 @@ import {
 
 export default class Profile extends React.Component {
 
+  // const [movies, setMovies] = useState([]);
+
   constructor() {
     super();
     this.state = 
     {
-      userInfo: []
-    };
+      firstName: '',
+      lastName: '',
+      email: '',
+      netid: '',
+      password: '',
+    }
+      this.onChange = this.onChange.bind(this)
+      this.onSubmit = this.onSubmit.bind(this)
   }
 
-  // componentDidMount() {
-  //   fetch('/test1')
-  //     .then(res => res.json())
-  //     .then(userInfo_ => this.setState({userInfo: userInfo_}, () => console.log("successfully fetched userInfo", userInfo_)))
+  onChange(e){
+    this.setState({ [e.target.name]:e.target.value })
+  }
+
+  onSubmit(e){
+    e.preventDefault()
+
+    const user = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      netid: this.state.netid,
+      password: this.state.password,
+    }
+
+    profileUpdate(user).then(res =>{
+        this.props.history.push('/user-profile')
+    })
+  }
+
+  // componentDidMount(){
+  //   const info = localStorage.userInfo
+  //   this.setState({
+  //     firstName: info.firstName,
+  //     lastName: info.lastName,
+  //     email: info.email,
+  //     netid: info.netid,
+  //     password: info.password,
+  //   })
   // }
+
+
 
   render() {
 
@@ -81,11 +117,15 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="jaime.lannister"
-                              id="input-username"
+                              // id="input-username"
                               placeholder="Username"
                               type="text"
+                              value={this.state.netid}
+                              onChange={this.onChange}
                             />
+                            
+                            {console.log(this.state.netid)}
+                          
                           </FormGroup>
                         </Col>
                         <Col lg="6">
@@ -99,8 +139,10 @@ export default class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="jaime.lannister@example.com"
-                              type="email"
+                              placeholder="password"
+                              type="text"
+                              value={this.state.password}
+                              onChange={this.onChange}
                             />
                           </FormGroup>
                         </Col>
@@ -116,10 +158,11 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="jaime"
                               id="input-first-name"
                               placeholder="First name"
                               type="text"
+                              value={this.state.firstName}
+                              onChange={this.onChange}
                             />
                           </FormGroup>
                         </Col>
@@ -133,10 +176,11 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lannister"
                               id="input-last-name"
                               placeholder="Last name"
                               type="text"
+                              value={this.state.lastName}
+                              onChange={this.onChange}
                             />
                           </FormGroup>
                         </Col>
@@ -152,10 +196,11 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lannister"
                               id="input-last-name"
-                              placeholder="Last name"
+                              placeholder="email"
                               type="text"
+                              value={this.state.email}
+                              onChange={this.onChange}
                             />
                           </FormGroup>
                         </Col>

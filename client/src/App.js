@@ -29,7 +29,7 @@ export default class mainPage extends React.Component {
             <br />
             <InputGroup size="lg">
               <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-lg">Password</InputGroup.Text>
+                <InputGroup.Text id="inputGroup-sizing-lg" type ='password'>Password</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
             </InputGroup>
