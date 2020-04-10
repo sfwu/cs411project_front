@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { profileUpdate } from '../../../../components/userFunction';
+import { profileUpdate, getLoginInfo } from '../../../../components/userFunction';
+import axios from 'axios';
 
 //deal with nodejs
 
@@ -57,16 +58,31 @@ export default class Profile extends React.Component {
     })
   }
 
-  // componentDidMount(){
-  //   const info = localStorage.userInfo
-  //   this.setState({
-  //     firstName: info.firstName,
-  //     lastName: info.lastName,
-  //     email: info.email,
-  //     netid: info.netid,
-  //     password: info.password,
-  //   })
-  // }
+  async componentWillMount(){
+    console.log("hahahahahahahahahahahaha");
+    // const info = getLoginInfo();
+    // await axios.get('http://127.0.0.1:5000/api/find_user').then( res =>{
+    //   console.log(res.json());
+    //   const info = res.json()
+    //   this.setState({
+    //     firstName: info.FirstName,
+    //     lastName: info.LastName,
+    //     email: info.Email,
+    //     netid: info.NetID,
+    //     password: info.Password,
+    //   })
+    //   console.log("==========================================");
+    // })
+
+    const response = await fetch('http://127.0.0.1:5000/api/find_user');
+    const info = response.json();
+    response.json().then(data => {
+      console.log("data", JSON.stringify(data, null, 4));
+    })
+    console.log(info);
+    console.log("==========================================");
+
+  }
 
 
 

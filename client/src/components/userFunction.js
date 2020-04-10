@@ -32,6 +32,8 @@ export const login = user => {
 
 export async function getLoginInfo() {
     // return 
-    let res = await axios.get('http://127.0.0.1:5000/xxxxx');
+    let res = await axios.get('http://127.0.0.1:5000/api/find_user')
     let data = res.data
+    console.log(data)
+    return data
 }
