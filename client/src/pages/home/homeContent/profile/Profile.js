@@ -1,7 +1,6 @@
 import React from "react";
 
 //deal with nodejs
-import getInfo from '../../../../../../api/routes/test1';
 
 // reactstrap components
 import {
@@ -29,11 +28,11 @@ export default class Profile extends React.Component {
     };
   }
 
-  componentDidMount() {
-    fetch('/test1')
-      .then(res => res.json())
-      .then(userInfo_ => this.setState({userInfo: userInfo_}, () => console.log("successfully fetched userInfo", userInfo_)))
-  }
+  // componentDidMount() {
+  //   fetch('/test1')
+  //     .then(res => res.json())
+  //     .then(userInfo_ => this.setState({userInfo: userInfo_}, () => console.log("successfully fetched userInfo", userInfo_)))
+  // }
 
   render() {
 
