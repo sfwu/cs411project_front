@@ -120,6 +120,7 @@ export default class Profile extends React.Component {
                               // id="input-username"
                               placeholder="Username"
                               type="text"
+                              name = 'netid'
                               value={this.state.netid}
                               onChange={this.onChange}
                             />
@@ -138,9 +139,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="input-email"
+                              // id="input-email"
                               placeholder="password"
                               type="text"
+                              name = 'password'
                               value={this.state.password}
                               onChange={this.onChange}
                             />
@@ -158,9 +160,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="input-first-name"
+                              // id="input-first-name"
                               placeholder="First name"
                               type="text"
+                              name ='firstName'
                               value={this.state.firstName}
                               onChange={this.onChange}
                             />
@@ -176,9 +179,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="input-last-name"
+                              // id="input-last-name"
                               placeholder="Last name"
                               type="text"
+                              name='lastName'
                               value={this.state.lastName}
                               onChange={this.onChange}
                             />
@@ -196,9 +200,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="input-last-name"
+                              // id="input-last-name"
                               placeholder="email"
                               type="text"
+                              name = 'email'
                               value={this.state.email}
                               onChange={this.onChange}
                             />
