@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify , request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -46,6 +46,47 @@ migrate.init_app(app, db)
 @app.route('/')
 def my_index():
     return "hello"
+
+@app.route("/api/test_find_em", methods=['POST'])
+def test_find_em():
+
+    # print("enter find_user function")
+    Info = request.get_json()
+    # print(Info)
+    if not Info:
+        return {"status": 400, "message": "Invalid body"}
+    person_id = Info.get("NetID")
+    if not person_id:
+        return {"status": 400, "message": "Missing field"}
+    print(person_id)
+    print(type(person_id))
+    # cur = mysql.connection.cursor()
+    # cur.execute("SELECT * FROM Users WHERE NetID = ""test1""")
+
+    # mysql.connection.commit()
+    # result = {"NetID": person_id}
+
+    result = db.session.execute(
+        "SELECT * FROM Employment where StudentID = :person_id ",
+        {"StudentID": person_id},
+    )
+    
+    # print(result)
+
+    return jsonify({'result': [dict(row) for row in result]})
+
+
+
+
+
+
+
+
+
+
+
+########### for user progile ############
+
 
 @app.route("/api/find_user", methods=['GET'])
 def find_user():

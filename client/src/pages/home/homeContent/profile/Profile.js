@@ -140,8 +140,6 @@ export default class Profile extends React.Component {
                               value={this.state.netid}
                               onChange={this.onChange}
                             />
-                            
-                            {console.log(this.state.netid)}
                           
                           </FormGroup>
                         </Col>

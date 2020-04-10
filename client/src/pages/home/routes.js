@@ -2,7 +2,7 @@ import Index from './homeContent/index';
 import Profile from './homeContent/profile/Profile';
 import Undefined3 from './homeContent/Maps';
 import Register from './homeContent/Register';
-import Login from './homeContent/Login';
+import Employment from './homeContent/Employment';
 import Tables from './homeContent/Tables';
 import Icons from './homeContent/Icons';
 
@@ -43,10 +43,10 @@ var routes = [
     layout: "/home"
   },
   {
-    path: "/login",
-    name: "undefined",
+    path: "/employment",
+    name: "Employment",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: Employment,
     layout: "/home"
   }
 ];
