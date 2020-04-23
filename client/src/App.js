@@ -17,7 +17,7 @@ export default class mainPage extends React.Component {
           <header className='welcome-page-title'>
             Welcome to ByteMe's world!
           </header>
-          <br />
+
 
           <div className = 'welcome-page-inputs'>
             <InputGroup size="lg">
@@ -26,15 +26,9 @@ export default class mainPage extends React.Component {
               </InputGroup.Prepend>
               <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
             </InputGroup>
-            <br />
-            <InputGroup size="lg">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-lg" type ='password'>Password</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
-            </InputGroup>
           </div>
           
+          <br />
           <br />
 
           <div className='welcome-page-buttons'>

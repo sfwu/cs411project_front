@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, jsonify , request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -41,25 +42,45 @@ migrate.init_app(app, db)
 # connection = engine.raw_connection()
 # cursor = connection.cursor()
 
+class Users():
+    """Model for user accounts"""
+    # We will need to add more things to represent the relationships
+
+    __tablename__ = 'Users'
+    # Password = db.Column(db.String(255), nullable=False)
+    NetID = db.Column(db.String(255), primary_key=True)
+    FirstName = db.Column(db.String(255), nullable=False)
+    LastName = db.Column(db.String(255), nullable=False)
+    Email = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, FirstName, LastName, Email):
+        self.FirstName = FirstName
+        self.LastName = LastName
+        # self.Password = Password
+        self.Email = Email
+
+    def __repr__(self):
+        return "<Person_id {}>".format(self.NetID)
 
 
 @app.route('/')
 def my_index():
     return "hello"
 
-@app.route("/api/test_find_em", methods=['POST'])
-def test_find_em():
+@app.route("/api/test_find_em/<id>", methods=['GET'])
+def test_find_em(id):
 
     # print("enter find_user function")
-    Info = request.get_json()
+    # Info = request.get_json()
     # print(Info)
-    if not Info:
-        return {"status": 400, "message": "Invalid body"}
-    person_id = Info.get("NetID")
-    if not person_id:
-        return {"status": 400, "message": "Missing field"}
-    print(person_id)
-    print(type(person_id))
+    # if not name:
+    #     return {"status": 400, "message": "Invalid body"}
+    # # person_id = Info.get("NetID")
+    # person_id = name
+    # if not person_id:
+    #     return {"status": 400, "message": "Missing field"}
+    # print(person_id)
+    # print(type(person_id))
     # cur = mysql.connection.cursor()
     # cur.execute("SELECT * FROM Users WHERE NetID = ""test1""")
 
@@ -67,8 +88,8 @@ def test_find_em():
     # result = {"NetID": person_id}
 
     result = db.session.execute(
-        "SELECT * FROM Employment where StudentID = :person_id ",
-        {"StudentID": person_id},
+        "SELECT * FROM Users where NetID =:netid",
+        {"netid": id},
     )
     
     # print(result)
@@ -118,19 +139,33 @@ def get_all_users():
     return jsonify({'result': [dict(row) for row in result]})
 
 
-@app.route("/api/insert_user", methods=['GET'])
-def insert_user():
+
+
+
+
+# -------------------------------HERE------------------------------------
+
+# mes = {"Email": "aaaa", "FirstName": "wow", "LastName": "wasai", "NetID": 473}
+# n = json.dumps(mes)
+
+@app.route("/api/register", methods=['POST'])
+def register():
     # cursor = db.cursor()
     # sql = "INSERT INTO Users (Email, FirstName, LastName, NetID, Password) VALUES (%s, %s, %s, %s, %s)"
-    
+    mess = request.get_json()
+    # print(type(Info))
+    # mess = json.loads(Info)
+    # print(mess)
+
     db.session.execute(
-       "INSERT INTO Users (Email, FirstName, LastName, NetID, Password) VALUES ('hahaha', 'hahaha', 'hahaha', '125', 'hahaha')"
+       "INSERT INTO Users (Email, FirstName, LastName, NetID) VALUES (:email, :firstname, :lastname, :netid)",
+       {"email": mess["Email"], "firstname": mess["FirstName"], "lastname": mess["LastName"], "netid": mess["NetID"]},
     )
     db.session.commit()
     
     # cursor.execute(sql, ('fake0', 'fake0', 'fake0', '125', 'fake0'))
 
-    return "insert success"
+    return {"message":"Register success!"}
 
 
 

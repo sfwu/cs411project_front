@@ -37,3 +37,27 @@ export async function getLoginInfo() {
     console.log(data)
     return data
 }
+
+export const userRegister = (user) => {
+    return fetch("/api/register", {
+        method:"POST",
+        // cache: "no-cache",
+        headers:{
+            "content_type":"application/json",
+        },
+        body:JSON.stringify(user)
+        }).then(res => res.json())
+}
+
+
+export const userLogin = (user) => {
+    return fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .catch((e) => console.log(e));
+  };
