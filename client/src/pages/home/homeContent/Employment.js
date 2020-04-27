@@ -18,161 +18,456 @@ import {
   Col
 } from "reactstrap";
 
-import EmploymentCard from '../../../components/employmentCard'
+import EmploymentCardBody from '../../../components/employmentCard'
+import { employmentAdd, employmentGetAll, employmentDelete, employmentUpdate } from '../../../components/userFunction'
 
 class Employment extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = 
     {
-      search: '',
+      id: '',
+      employmentID: '',
       NetID: '',
       Position: '',
       StartDate: '',
       EndDate: '',
-      OfficeId: '',
+      CompanyName: '',
+      CompanyCity: '',
+      CompanyState: '',
+      CompanyCountry: '',
+      CompanyAddress: '',
+      Industry: '',
+      employmentlist: [
+        // {
+        //   id: 0,
+        //   value: {
+        //     Position: 'aaa',
+        //     StartDate: 'aaa',
+        //     EndDate: 'aaa',
+        //     CompanyName: 'aaa',
+        //     CompanyCity: 'aaa',
+        //     CompanyState: 'aaa',
+        //     CompanyCountry: 'aaa',
+        //     CompanyAddress: 'aaa',
+        //     Industry: 'aaa',
+        //   }
+        // }, {
+        //   id: 1,
+        //   value: {
+        //     Position: 'bbb',
+        //     StartDate: 'bbb',
+        //     EndDate: 'bbb',
+        //     CompanyName: 'bbb',
+        //     CompanyCity: 'bbb',
+        //     CompanyState: 'bbb',
+        //     CompanyCountry: 'bbb',
+        //     CompanyAddress: 'bbb',
+        //     Industry: 'bbb',
+        //   }
+        // }
+      ]
     }
       this.onChange = this.onChange.bind(this)
-      this.onSubmit = this.onSubmit.bind(this)
-      this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-      this.handleInsertSubmit = this.handleInsertSubmit.bind(this);
-      this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
-      this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
+      this.handleAdd = this.handleAdd.bind(this)
+      this.handleGetAllHistory = this.handleGetAllHistory.bind(this)
+      this.handleModify = this.handleModify.bind(this)
+      this.getAllHistory = this.getAllHistory.bind(this)
+      this.handleDelete = this.handleDelete.bind(this)
+      this.handleUpdate = this.handleUpdate.bind(this)
   }
+
+
+  // display all the history
+  // note that the history need to be fetch by handleGetAllHistory
+  getAllHistory = (employmentlist) => {
+    return employmentlist.map(({id, value}) => {
+        return (
+          <Card >
+            <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                        <Col xs="5">
+                            <h3 className="mb-0">Employment History {id}</h3>
+                        </Col>
+                        
+                        <Col className="text-right" xs="5">
+                            <Button
+                                color="primary"
+                                href="#pablo"
+                                id = {id}
+                                // onClick={this.handleModify(id)}
+                                onClick = {this.handleModify}
+                                size="sm"
+                            >
+                                Modify
+                            </Button>
+                    </Col>
+                    </Row>
+                    </CardHeader>
+          <EmploymentCardBody
+            employmentInfo = {value}
+          />
+          </Card>
+        )
+    })
+  }
+
+
+  handleModify(e){
+    e.preventDefault()
+    
+    this.setState({ 
+      Position: this.state.employmentlist[e.target.id].value.Position,
+      StartDate: this.state.employmentlist[e.target.id].value.StartDate,
+      EndDate: this.state.employmentlist[e.target.id].value.EndDate,
+      CompanyName: this.state.employmentlist[e.target.id].value.CompanyName,
+      CompanyCity: this.state.employmentlist[e.target.id].value.CompanyCity,
+      CompanyState: this.state.employmentlist[e.target.id].value.CompanyState,
+      CompanyCountry: this.state.employmentlist[e.target.id].value.CompanyCountry,
+      CompanyAddress: this.state.employmentlist[e.target.id].value.CompanyAddress,
+      Industry: this.state.employmentlist[e.target.id].value.Industry,
+      id: e.target.id
+     })
+  }
+
+
+
 
   onChange(e){
     this.setState({ [e.target.name]:e.target.value })
   }
 
-  onSubmit(e){
+  async handleAdd(e){
     e.preventDefault()
 
-    const user = {
-      NetID: this.state.NetID,
+    const userEmployment = {
+
+      NetID: this.props.NetID,
       Position: this.state.Position,
       StartDate: this.state.StartDate,
       EndDate: this.state.EndDate,
-      OfficeId: this.state.OfficeId,
+      CompanyName: this.state.CompanyName,
+      CompanyCity: this.state.CompanyCity,
+      CompanyState: this.state.CompanyState,
+      CompanyCountry: this.state.CompanyCountry,
+      CompanyAddress: this.state.CompanyAddress,
+      Industry: this.state.Industry,
+    }
+
+    const resoponse = await employmentAdd(userEmployment);
+    this.setState({ employmentlist: [...this.state.employmentlist, {id: this.state.employmentlist.length, value: userEmployment }] }) 
+    console.log(resoponse.message)
+}
+
+
+async handleDelete(e){
+  e.preventDefault()
+
+  const userEmployment = {
+
+    NetID: this.props.NetID,
+    Position: this.state.Position,
+    CompanyName: this.state.CompanyName,
+    CompanyCity: this.state.CompanyCity,
   }
 
-  //   profileUpdate(user).then(res =>{
-  //     this.props.history.push('/Employment')
-  // })
+  const resoponse = await employmentDelete(userEmployment);
+  if( resoponse.status   == 204){
+    var employmentlist_copy = [...this.state.employmentlist];
+    employmentlist_copy.splice(this.state.id, 1);
+    this.setState({ employmentlist: employmentlist_copy})
+  }
+ 
+  console.log(resoponse.message)
+}
+
+
+async handleUpdate(e){
+  e.preventDefault()
+
+  const userEmployment = {
+
+    NetID: this.props.NetID,
+    Position: this.state.Position,
+    StartDate: this.state.StartDate,
+    EndDate: this.state.EndDate,
+    CompanyName: this.state.CompanyName,
+    CompanyCity: this.state.CompanyCity,
+    CompanyState: this.state.CompanyState,
+    CompanyCountry: this.state.CompanyCountry,
+    CompanyAddress: this.state.CompanyAddress,
+    Industry: this.state.Industry,
   }
 
-
-handleSearchSubmit(e) {
-    console.log("making request")
-    console.log(this.state.NetID)
-    fetch("/api/find_em", {
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-          "content_type":"application/json",
-      },
-      body:JSON.stringify({StudentId: this.state.search})
-      })
-      .then(response => {
-        console.log(response)
-          return response.json()})
-      .then(json => {
-        // this.setState({playerName: json[0], })
-        console.log(json)
-      })
+  const userEmployment_state = {
+    Position: this.state.Position,
+    StartDate: this.state.StartDate,
+    EndDate: this.state.EndDate,
+    CompanyName: this.state.CompanyName,
+    CompanyCity: this.state.CompanyCity,
+    CompanyState: this.state.CompanyState,
+    CompanyCountry: this.state.CompanyCountry,
+    CompanyAddress: this.state.CompanyAddress,
+    Industry: this.state.Industry,
   }
 
-  handleInsertSubmit(e) {
-    console.log("making request")
-    fetch("/api/insert_em", {
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-          "content_type":"application/json",
-      },
-      body:JSON.stringify({Position: this.state.Position, StartDate: this.state.StartDate, EndDate: this.state.EndDate,  StudentId: this.state.NetID, OfficeId: this.state.OfficeId})
-      })
-    console.log("Insert success")
+  const resoponse = await employmentUpdate(userEmployment);
+  
+  if( resoponse.status == 204){
+    var employmentlist_copy = [...this.state.employmentlist];
+    employmentlist_copy[this.state.id].value = userEmployment_state;
+    this.setState({ employmentlist: employmentlist_copy})
+  }
+  console.log(resoponse.message)
+}
 
+
+
+async handleGetAllHistory(e){
+  e.preventDefault()
+
+  const user = {
+    NetID: this.props.NetID
   }
 
-  handleDeleteSubmit(e) {
-    console.log("making request")
-    fetch("/api/delete_em", {
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-          "content_type":"application/json",
-      },
-      body:JSON.stringify({Position: this.state.Position, StartDate: this.state.StartDate, EndDate: this.state.EndDate,  StudentId: this.state.NetID, OfficeId: this.state.OfficeId})
-      })
-      console.log("Delete success")
-  }
+  const employmentlist = await employmentGetAll(user);
 
-  handleUpdateSubmit(e) {
-    console.log("making request")
-    fetch("/api/update_em", {
-      method:"POST",
-      cache: "no-cache",
-      headers:{
-          "content_type":"application/json",
-      },
-      body:JSON.stringify({Position: this.state.Position, StartDate: this.state.StartDate, EndDate: this.state.EndDate,  StudentId: this.state.NetID, OfficeId: this.state.OfficeId})
-      })
-      console.log("Update success")
+  if(employmentlist.status == 200){
+    // console.log(employmentlist.employment)
+    this.setState({ employmentlist: employmentlist.employment })
   }
+}
 
 
   render() {
     return (
         <>
          
+           
         <Container >
-        
-        <label
-          className="form-control-label"
-          htmlFor="input-search_netid"
-        >
-          Search_NetID
-        </label>
         <Row>
-        <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-            
-        <Input
-          className="form-control-alternative"
-          placeholder=""
-          type="text"
-          name ='search'
-          value={this.state.search}
-          onChange={this.onChange}
-        />
-        </Col>
-        <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-        <Button
-          color="primary"
-          href="#pablo"
-          onClick={this.handleSearchSubmit}
-          size="sm"
-        >
-          Check out!
-        </Button>
-        </Col>
-        </Row>
-        </Container>
-
-        <Container >
-          <Card>
+        <Col className="order-xl-1" xl="10">
+          <Card className="bg-secondary shadow">
           
           <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
-                    <Col xs="2">
-                      <h3 className="mb-0">Add Employment history</h3>
+                    <Col xs="5">
+                      <h3 className="mb-0">My Employment history, NetID: {this.props.NetID}</h3>
                     </Col>
-                    <Col className="text-right" xs="3">
+                    
+                    <Col className="text-right" xs="5">
                       <Button
                         color="primary"
                         href="#pablo"
-                        onClick={this.handleInsertSubmit}
+                        onClick={this.handleGetAllHistory}
+                        size="sm"
+                      >
+                        Show History
+                      </Button>
+                    </Col>
+                  </Row>
+        </CardHeader>
+
+        
+        <CardBody>
+          <Form>
+            
+          <Row className="align-items-center">
+          <Col xs="5">
+          <FormGroup>
+              <label
+                className="form-control-label"
+                htmlFor="input-NetID_add"
+              >
+                Position
+              </label>
+              <Input
+                className="form-control-alternative"
+                // id="input-username"
+                type="text"
+                name = 'Position'
+                value={this.state.Position}
+                onChange={this.onChange}
+              />
+            
+            </FormGroup>
+            </Col>
+             
+            <Col xs="3">
+            <FormGroup>
+                <label
+                  className="form-control-label"
+                  htmlFor="input-username"
+                >
+                  Start Date
+                </label>
+                <Input
+                  className="form-control-alternative"
+                  // id="input-username"
+                  type="text"
+                  name = 'StartDate'
+                  value={this.state.StartDate}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+            </Col>
+           
+            <Col xs="3">  
+            <FormGroup>
+                <label
+                  className="form-control-label"
+                  htmlFor="input-username"
+                >
+                  End Date
+                </label>
+                <Input
+                  className="form-control-alternative"
+                  // id="input-username"
+                  type="text"
+                  name = 'EndDate'
+                  value={this.state.EndDate}
+                  onChange={this.onChange}
+                />
+              
+              </FormGroup>
+            </Col>
+             
+          </Row>
+
+          <Row>
+            <Col xs="5">
+            
+              <FormGroup>
+                <label
+                  className="form-control-label"
+                  htmlFor="input-username"
+                >
+                  Company Name
+                </label>
+                <Input
+                  className="form-control-alternative"
+                  // id="input-username"
+                  type="text"
+                  name = 'CompanyName'
+                  value={this.state.CompanyName}
+                  onChange={this.onChange}
+                />
+              
+              </FormGroup>
+              </Col>
+              <Col xs="5">
+              <FormGroup>
+                <label
+                  className="form-control-label"
+                  htmlFor="input-username"
+                >
+                  Industry
+                </label>
+                <Input
+                  className="form-control-alternative"
+                  // id="input-username"
+                  type="text"
+                  name = 'Industry'
+                  value={this.state.Industry}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+             
+                </Col>
+          </Row>
+
+
+          <Row>
+            <Col xs="3">
+              <FormGroup>
+                  <label
+                    className="form-control-label"
+                    htmlFor="input-username"
+                  >
+                    City
+                  </label>
+                  <Input
+                    className="form-control-alternative"
+                    // id="input-username"
+                    type="text"
+                    name = 'CompanyCity'
+                    value={this.state.CompanyCity}
+                    onChange={this.onChange}
+                  />
+                
+                </FormGroup>
+            </Col>
+          <Col xs="3">
+           <FormGroup>
+              <label
+                className="form-control-label"
+                htmlFor="input-username"
+              >
+                State
+              </label>
+              <Input
+                className="form-control-alternative"
+                // id="input-username"
+                type="text"
+                name = 'CompanyState'
+                value={this.state.CompanyState}
+                onChange={this.onChange}
+              />
+            </FormGroup>
+          </Col>
+
+            <Col xs="3">
+              <FormGroup>
+                <label
+                  className="form-control-label"
+                  htmlFor="input-username"
+                >
+                  Country
+                </label>
+                <Input
+                  className="form-control-alternative"
+                  // id="input-username"
+                  type="text"
+                  name = 'CompanyCountry'
+                  value={this.state.CompanyCountry}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+           </Col>
+
+          </Row>
+
+          <Row>
+            <Col xs="10">
+                <FormGroup>
+                  <label
+                    className="form-control-label"
+                    htmlFor="input-username"
+                  >
+                    Address
+                  </label>
+                  <Input
+                    className="form-control-alternative"
+                    type="text"
+                    name = 'CompanyAddress'
+                    value={this.state.CompanyAddress}
+                    onChange={this.onChange}
+                  />
+                </FormGroup>
+            </Col>
+          </Row>
+         
+
+        
+
+          <Row>
+
+          <Col className="text-right" xs="3">
+                      <Button
+                        color="primary"
+                        href="#pablo"
+                        onClick={this.handleAdd}
                         size="sm"
                       >
                         Add
@@ -183,7 +478,7 @@ handleSearchSubmit(e) {
                       <Button
                         color="primary"
                         href="#pablo"
-                        onClick={this.handleDeleteSubmit}
+                        onClick={this.handleDelete}
                         size="sm"
                       >
                         Delete
@@ -194,174 +489,30 @@ handleSearchSubmit(e) {
                       <Button
                         color="primary"
                         href="#pablo"
-                        onClick={this.handleUpdateSubmit}
+                        onClick={this.handleUpdate}
                         size="sm"
                       >
                         Update
                       </Button>
                     </Col>
-                  </Row>
-                </CardHeader>
-
-        
-        <CardBody>
-          <Form>
-            
-          <Row>
-              <FormGroup>
-              <label
-                className="form-control-label"
-                htmlFor="input-NetID_add"
-              >
-                NetID
-              </label>
-              <Input
-                className="form-control-alternative"
-                // id="input-username"
-                type="text"
-                name = 'netid'
-                value={this.state.netid}
-                onChange={this.onChange}
-              />
-            
-            </FormGroup>
-          </Row>
-
-          <Row>
-              <FormGroup>
-                <label
-                  className="form-control-label"
-                  htmlFor="input-username"
-                >
-                  Position
-                </label>
-                <Input
-                  className="form-control-alternative"
-                  // id="input-username"
-                  type="text"
-                  name = 'Position'
-                  value={this.state.Position}
-                  onChange={this.onChange}
-                />
-              
-              </FormGroup>
           </Row>
 
 
-          <Row>
-              <FormGroup>
-                  <label
-                    className="form-control-label"
-                    htmlFor="input-username"
-                  >
-                    StartDate
-                  </label>
-                  <Input
-                    className="form-control-alternative"
-                    // id="input-username"
-                    type="text"
-                    name = 'StartDate'
-                    value={this.state.StartDate}
-                    onChange={this.onChange}
-                  />
-                
-                </FormGroup>
-          </Row>
-
-
-          <Row>
-              <FormGroup>
-                <label
-                  className="form-control-label"
-                  htmlFor="input-username"
-                >
-                  EndDate
-                </label>
-                <Input
-                  className="form-control-alternative"
-                  // id="input-username"
-                  type="text"
-                  name = 'EndDate'
-                  value={this.state.EndDate}
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-          </Row>
-
-
-          <Row>
-
-          <FormGroup>
-            <label
-              className="form-control-label"
-              htmlFor="input-username"
-            >
-              OfficeId
-            </label>
-            <Input
-              className="form-control-alternative"
-              // id="input-username"
-              type="text"
-              name = 'OfficeId'
-              value={this.state.OfficeId}
-              onChange={this.onChange}
-            />
-          
-          </FormGroup>
-          </Row>
 
           </Form>
           </CardBody>
           </Card>
+          </Col>
+          </Row>
         </Container>
         
-
+        
 
 
 
         <Container >
           <Row className="align-items-center">
-            <EmploymentCard 
-              num = '01'
-              NetID = '125'
-              Position = 'General Manager'
-              StartDate = '2017-01-01'
-              ndDate = '2018-01-01'
-              OfficeId ='01'
-            />
-          </Row>
-
-          <Row className="align-items-center">
-            <EmploymentCard 
-              num = '01'
-              NetID = '125'
-              Position = 'General Manager'
-              StartDate = '2017-01-01'
-              ndDate = '2018-01-01'
-              OfficeId ='01'
-            />
-          </Row>
-
-          <Row className="align-items-center">
-            <EmploymentCard 
-              num = '01'
-              NetID = '125'
-              Position = 'General Manager'
-              StartDate = '2017-01-01'
-              ndDate = '2018-01-01'
-              OfficeId ='01'
-            />
-          </Row>
-
-          <Row className="align-items-center">
-            <EmploymentCard 
-              num = '01'
-              NetID = '125'
-              Position = 'General Manager'
-              StartDate = '2017-01-01'
-              ndDate = '2018-01-01'
-              OfficeId ='01'
-            />
+            {this.getAllHistory(this.state.employmentlist)}
           </Row>
         </Container>
       </>

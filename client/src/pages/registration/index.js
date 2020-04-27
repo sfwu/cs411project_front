@@ -37,7 +37,7 @@ export default class register extends React.Component {
   }
 
     const resoponse = await userRegister(user);
-    // console.log(resoponse.message)
+    console.log(resoponse.message)
 }
 
     render () {
@@ -88,6 +88,19 @@ export default class register extends React.Component {
                 aria-describedby="inputGroup-sizing-sm" 
                 name ='LastName'
                 // value={this.state.LastName}
+                onChange={this.onChange}
+                />
+            </InputGroup>
+
+            <br />
+            <InputGroup size="lg">
+              <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroup-sizing-lg">Email</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl 
+                aria-label="Large" 
+                aria-describedby="inputGroup-sizing-sm" 
+                name ='Email'
                 onChange={this.onChange}
                 />
             </InputGroup>

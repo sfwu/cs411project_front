@@ -1,18 +1,5 @@
 import axios from 'axios';
 
-export const profileUpdate = user => {
-    return axios
-    .post('users/profile', {
-        firstName : user.firstName,
-        lastName : user.lastName,
-        emial : user.email,
-        password: user.password,
-        netid: user.netid,
-    })
-    .then(res =>{
-        console.log(res)
-    })
-}
 
 export const login = user => {
     return axios
@@ -51,7 +38,7 @@ export const userRegister = (user) => {
 
 
 export const userLogin = (user) => {
-    return fetch("/api/register", {
+    return fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,3 +48,75 @@ export const userLogin = (user) => {
       .then((res) => res.json())
       .catch((e) => console.log(e));
   };
+
+
+export const profileModify = (user) => {
+    return fetch("/api/profile",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const profileUpdate= (user) => {
+    return fetch("/api/profile",{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const employmentAdd= (userEmployment) => {
+    return fetch("/api/employment",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEmployment),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const employmentDelete= (userEmployment) => {
+    return fetch("/api/employment",{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEmployment),
+    })
+      .then((res) => res.json())
+  };
+
+  export const employmentUpdate= (userEmployment) => {
+    return fetch("/api/employment",{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEmployment),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const employmentGetAll= (user) => {
+    return fetch("/api/find_employment",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+

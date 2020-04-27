@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { profileUpdate, getLoginInfo } from '../../../../components/userFunction';
 import axios from 'axios';
+import { profileModify, profileUpdate } from '../../../../components/userFunction'
 
 //deal with nodejs
 
@@ -24,18 +24,26 @@ export default class Profile extends React.Component {
 
   // const [movies, setMovies] = useState([]);
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = 
     {
-      firstName: '',
-      lastName: '',
-      email: '',
-      netid: '',
-      password: '',
+      FirstName: "",
+      LastName: '',
+      Email: '',
+      Graduation: '',
+      Major: '',
+      Address: "",
+      City: "",
+      PostalCode: "",
+      State: "",
+      AboutMe: "",
+      Country: "",
     }
       this.onChange = this.onChange.bind(this)
       this.onSubmit = this.onSubmit.bind(this)
+      this.handleModify = this.handleModify.bind(this)
+      this.handleUpdate = this.handleUpdate.bind(this)
   }
 
   onChange(e){
@@ -46,11 +54,9 @@ export default class Profile extends React.Component {
     e.preventDefault()
 
     const user = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      netid: this.state.netid,
-      password: this.state.password,
+      FirstName: this.state.firstName,
+      LastName: this.state.lastName,
+      Email: this.state.email
     }
 
     profileUpdate(user).then(res =>{
@@ -58,57 +64,97 @@ export default class Profile extends React.Component {
     })
   }
 
-  async componentWillMount(){
-    console.log("hahahahahahahahahahahaha");
-    // const info = getLoginInfo();
-    // await axios.get('http://127.0.0.1:5000/api/find_user').then( res =>{
-    //   console.log(res.json());
-    //   const info = res.json()
-    //   this.setState({
-    //     firstName: info.FirstName,
-    //     lastName: info.LastName,
-    //     email: info.Email,
-    //     netid: info.NetID,
-    //     password: info.Password,
-    //   })
-    //   console.log("==========================================");
-    // })
-
-    const response = await fetch('http://127.0.0.1:5000/api/find_user');
-    const info = response.json();
-    response.json().then(data => {
-      console.log("data", JSON.stringify(data, null, 4));
-    })
-    console.log(info);
-    console.log("==========================================");
-
+ handleModify(e){
+    e.preventDefault()
+    this.getUserInfo();
   }
 
+  handleUpdate(e){
+    e.preventDefault()
+    this.updateUserInfo();
+  }
 
+  async getUserInfo(){
+    const user = {
+      NetID: this.props.NetID
+    }
+
+    const userInfo = await profileModify(user);
+    // console.log(userInfo)
+    if( userInfo.status == 200 ){
+      this.setState({
+            FirstName: userInfo.profile.FirstName, 
+            LastName: userInfo.profile.LastName, 
+            Email: userInfo.profile.Email, 
+            Graduation: userInfo.profile.Graduation, 
+            Major: userInfo.profile.Major,
+            AboutMe: userInfo.profile.AboutMe,
+            Address: userInfo.profile.Address,
+            City: userInfo.profile.City,
+            PostalCode: userInfo.profile.PostalCode,
+            State: userInfo.profile.State,
+            Country: userInfo.profile.Country,
+          })
+    }
+    console.log(this.state)
+  }
+
+  async updateUserInfo(){
+
+    const user = {
+      NetID: this.props.NetID,
+      FirstName: this.state.FirstName, 
+      LastName: this.state.LastName, 
+      Email: this.state.Email, 
+      Graduation: this.state.Graduation, 
+      Major: this.state.Major,
+      AboutMe: this.state.AboutMe,
+      Address: this.state.Address,
+      City: this.state.City,
+      PostalCode: this.state.PostalCode,
+      State: this.state.State,
+      Country: this.state.Country,
+    }
+
+    const response = await profileUpdate(user);
+  }
 
   render() {
 
     return (
       <>
+      {/* {console.log('this is profile 0 ')}
+      {console.log(this.props.NetID)}
+      {console.log('this is profile 1 ')} */}
       <div className="profile_page">
         {/* <UserHeader /> */}
         <Container >
           <Row>
-            <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-            </Col>
-            <Col className="order-xl-1" xl="8">
+
+            <Col className="order-xl-1" xl="10">
               <Card className="bg-secondary shadow">
 
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="5">
-                      <h3 className="mb-0">My account</h3>
+                      <h3 className="mb-0">My account NetID:{this.props.NetID}</h3>
                     </Col>
-                    <Col className="text-right" xs="7">
+                    <Col className="text-right" xs="5">
                       <Button
                         color="primary"
                         href="#pablo"
-                        onClick={e => e.preventDefault()}
+                        value = {this.props.id}
+                        onClick={this.props.handleModify}
+                        size="sm"
+                      >
+                        Modify
+                      </Button>
+                    </Col>
+                    <Col className="text-right" xs="2">
+                      <Button
+                        color="primary"
+                        href="#pablo"
+                        onClick={this.handleUpdate}
                         size="sm"
                       >
                         Save
@@ -129,15 +175,15 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              NetID
+                              First name
                             </label>
                             <Input
                               className="form-control-alternative"
                               // id="input-username"
-                              placeholder="Username"
+                              placeholder= "First Name"
                               type="text"
-                              name = 'netid'
-                              value={this.state.netid}
+                              name = 'FirstName'
+                              value = {this.state.FirstName}
                               onChange={this.onChange}
                             />
                           
@@ -149,15 +195,15 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Password
+                              Last name
                             </label>
                             <Input
                               className="form-control-alternative"
                               // id="input-email"
-                              placeholder="password"
+                              placeholder="Last name"
                               type="text"
-                              name = 'password'
-                              value={this.state.password}
+                              name = 'LastName'
+                              value = {this.state.LastName}
                               onChange={this.onChange}
                             />
                           </FormGroup>
@@ -170,15 +216,15 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              First name
+                              Major
                             </label>
                             <Input
                               className="form-control-alternative"
                               // id="input-first-name"
-                              placeholder="First name"
+                              placeholder="your major"
                               type="text"
-                              name ='firstName'
-                              value={this.state.firstName}
+                              name ='Major'
+                              value = {this.state.Major}
                               onChange={this.onChange}
                             />
                           </FormGroup>
@@ -189,15 +235,15 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Last name
+                              Graduation
                             </label>
                             <Input
                               className="form-control-alternative"
                               // id="input-last-name"
-                              placeholder="Last name"
+                              placeholder="your graduation date"
                               type="text"
-                              name='lastName'
-                              value={this.state.lastName}
+                              name='Graduation'
+                              value = {this.state.Graduation}
                               onChange={this.onChange}
                             />
                           </FormGroup>
@@ -214,11 +260,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              // id="input-last-name"
-                              placeholder="email"
+                              placeholder="your email"
                               type="text"
-                              name = 'email'
-                              value={this.state.email}
+                              name = 'Email'
+                              value={this.state.Email}
                               onChange={this.onChange}
                             />
                           </FormGroup>
@@ -242,9 +287,11 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="somewhere in the king's landing"
                               id="input-address"
-                              placeholder="Home Address"
+                              placeholder="somewhere in the king's landing"
+                              name = "Address"
+                              value = {this.state.Address}
+                              onChange={this.onChange}
                               type="text"
                             />
                           </FormGroup>
@@ -261,9 +308,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="king's landing"
-                              id="input-city"
-                              placeholder="City"
+                              placeholder="king's landing"
+                              value={this.state.City}
+                              onChange={this.onChange}
+                              name="City"
                               type="text"
                             />
                           </FormGroup>
@@ -278,9 +326,10 @@ export default class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="United States"
-                              id="input-country"
-                              placeholder="Country"
+                              placeholder="United States"
+                              value = {this.state.Country}
+                              onChange={this.onChange}
+                              name="Country"
                               type="text"
                             />
                           </FormGroup>
@@ -297,6 +346,9 @@ export default class Profile extends React.Component {
                               className="form-control-alternative"
                               id="input-postal-code"
                               placeholder="Postal code"
+                              value = {this.state.PostalCode}
+                              onChange={this.onChange}
+                              name="PostalCode"
                               type="number"
                             />
                           </FormGroup>
@@ -311,9 +363,12 @@ export default class Profile extends React.Component {
                         <label>About Me</label>
                         <Input
                           className="form-control-alternative"
-                          placeholder="A few words about you ..."
+                          placeholder= "write something here!"
                           rows="4"
-                          defaultValue="Write something here to display to others later on"
+                          value = {this.state.AboutMe}
+                          onChange={this.onChange}
+                          // defaultValue="Write something here to display to others later on"
+                          name="AboutMe"
                           type="textarea"
                         />
                       </FormGroup>
