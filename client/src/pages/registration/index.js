@@ -110,7 +110,13 @@ export default class register extends React.Component {
 
           <div>
               <Button variant="primary" size="lg" className ='r_buttons' onClick = {this.onSubmit}>
-              Submit
+              Register
+              </Button>
+            </div>
+            <br />
+            <div>
+              <Button variant="primary" size="lg" className ='r_buttons' onClick = {() => history.push('/')} >
+              Go Back to Login
               </Button>
             </div>
 
