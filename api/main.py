@@ -191,7 +191,7 @@ def login():
     return {"status": 404, "message": "Person not found"}
 
 
-@app.route("/api/profile/", methods=['POST', 'PUT'])
+@app.route("/api/profile", methods=['POST', 'PUT'])
 def profile():
     Info = request.get_json()
 

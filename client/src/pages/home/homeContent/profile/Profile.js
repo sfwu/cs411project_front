@@ -143,8 +143,8 @@ export default class Profile extends React.Component {
                       <Button
                         color="primary"
                         href="#pablo"
-                        value = {this.props.id}
-                        onClick={this.props.handleModify}
+                        // value = {this.props.id}
+                        onClick={this.handleModify}
                         size="sm"
                       >
                         Modify

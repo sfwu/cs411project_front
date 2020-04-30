@@ -37,7 +37,7 @@ export default class mainPage extends React.Component {
   // console.log(resoponse)
   if(resoponse.status == 200){
     history.push({
-      pathname : '/home',
+      pathname : '/home/user-profile',
       user :{
         NetID: this.state.NetID
       }
