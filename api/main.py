@@ -349,7 +349,7 @@ def employment():
         else: date_time2 = None
 
         result1 = db.session.execute(
-            " UPDATE Employment SET Position =:position, StartDate =:startdate, EndDate=:enddate, OfficeName=:officename, OfficeCity=:officecity WHERE StudentId =:studentId",
+            " UPDATE Employment SET StartDate =:startdate, EndDate=:enddate WHERE StudentId =:studentId and Position =:position and OfficeName=:officename and OfficeCity=:officecity",
             {"studentId": Info["NetID"], "position": Info["Position"], "startdate": date_time1, "enddate": date_time2, "officename": Info["CompanyName"], "officecity":Info["CompanyCity"]}
             # {"NetID": person_id},
         )
@@ -397,12 +397,48 @@ def find_enrollment():
         enroll_dict.append(enroll_list.copy())
         i = i+1
 
-    return {"status": 200, "message": "employment found", "employment": enroll_dict}
+    return {"status": 200, "message": "enrollment found", "enrollment": enroll_dict}
 
 
-# @app.route("/api/enrollment", methods=['POST', 'PUT', 'DELETE'])
-# def enrollment():
+@app.route("/api/enrollment", methods=['POST', 'PUT', 'DELETE'])
+def enrollment():
+    Info = request.get_json()
 
+    if request.method == 'POST':
+
+        try:
+            result2 = db.session.execute(
+               "INSERT INTO Enrollments (CourseNum, CourseTitle, Department, StudentId) VALUES (:coursenum, :coursetitle, :department, :netid)",
+               {"coursenum": Info["CourseNum"], "coursetitle": Info["CourseTitle"], "department": Info["Department"],"netid": Info["NetID"]},
+            )
+
+        except IntegrityError:
+ 
+            return {"status": 409, "message": "History already exists"}
+
+        db.session.commit()
+         
+        return {"status": 201, "message": "Insert succeed"}
+
+    if request.method == 'PUT':
+
+        result = db.session.execute(
+            " UPDATE Enrollments SET CourseTitle=:coursetitle WHERE StudentId =:netid and CourseNum =:coursenum and Department =:department ",
+            {"netid": Info["NetID"], "coursenum": Info["CourseNum"], "coursetitle": Info["CourseTitle"], "department":Info["Department"]}
+            # {"NetID": person_id},
+            )
+
+        db.session.commit()
+
+        return {"status": 204, "message": "Enrollments updated"}
+
+    if request.method == 'DELETE':
+        result = db.session.execute(
+            "DELETE From Enrollments where StudentId =:netid and CourseNum =:coursenum and Department =:department",
+            {"netid":Info["NetID"],"coursenum":Info["CourseNum"],"department":Info["Department"]},
+        )
+        db.session.commit()
+        return {"status": 204, "message": "Enrollments deleted"}
 
 
 ########### for employment history ############

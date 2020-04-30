@@ -1,23 +1,3 @@
-// import React from 'react';
-// import './index.css';
-// import { Button, InputGroup, FormControl } from 'react-bootstrap';
-// import history from '../../components/history/history'
-
-// export default class home extends React.Component {
-//     render () {
-//       return (
-//           <div className='main'>
-
-//           <header className='header'>
-//             This is the home page that the user will see after login!
-//           </header>
-//           <br />
-
-//         </div>
-//       )
-//     }
-//   }
-
 import React from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -43,14 +23,14 @@ import {
 
 import Header from "../../../components/header/index";
 
-class Index extends React.Component {
+class Recommendation extends React.Component {
   render() {
     return (
       <p>
-        hi!!!!
+        hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hhi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!i!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!hi!!!!
         </p>
     );
   }
 }
 
-export default Index;
+export default Recommendation;

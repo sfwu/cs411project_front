@@ -280,7 +280,7 @@ async handleGetAllHistory(e){
                 className="form-control-label"
                 htmlFor="input-NetID_add"
               >
-                Position
+                Position (Required)
               </label>
               <Input
                 className="form-control-alternative"
@@ -343,7 +343,7 @@ async handleGetAllHistory(e){
                   className="form-control-label"
                   htmlFor="input-username"
                 >
-                  Company Name
+                  Company Name (Required)
                 </label>
                 <Input
                   className="form-control-alternative"
@@ -385,7 +385,7 @@ async handleGetAllHistory(e){
                     className="form-control-label"
                     htmlFor="input-username"
                   >
-                    City
+                    City (Required)
                   </label>
                   <Input
                     className="form-control-alternative"

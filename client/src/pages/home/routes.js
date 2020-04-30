@@ -1,33 +1,12 @@
-import Index from './homeContent/index';
+import Recommendation from './homeContent/Recommendation';
 import Profile from './homeContent/profile/Profile';
-import Undefined3 from './homeContent/Maps';
+import Enrollment from './homeContent/Enrollment';
 import Register from './homeContent/Register';
 import Employment from './homeContent/Employment';
 import Tables from './homeContent/Tables';
 import Icons from './homeContent/Icons';
 
 var routes = [
-  {
-    path: "/index",
-    name: "undefined",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/home"
-  },
-  {
-    path: "/icons",
-    name: "undefined",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/home"
-  },
-  {
-    path: "/undefined3",
-    name: "undefined",
-    icon: "ni ni-pin-3 text-orange",
-    component: Undefined3,
-    layout: "/home"
-  },
   {
     path: "/user-profile",
     name: "User Profile",
@@ -36,18 +15,40 @@ var routes = [
     layout: "/home"
   },
   {
-    path: "/tables",
-    name: "undefined",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    path: "/enrollment",
+    name: "Course Enrollment",
+    icon: "ni ni-pin-3 text-orange",
+    component: Enrollment,
     layout: "/home"
   },
   {
+
     path: "/employment",
-    name: "Employment",
+    name: "Employment History",
     icon: "ni ni-key-25 text-info",
     component: Employment,
     layout: "/home"
-  }
+  },
+  {
+    path: "/recommendation",
+    name: "Job Recommend",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: Recommendation,
+    layout: "/home"
+  },
+  {
+    path: "/",
+    name: "Login",
+    icon: "ni ni-tv-2 text-primary",
+    // component: Tables,
+    layout: ""
+  },
+  // {
+  //   path: "/icons",
+  //   name: "undefined",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/home"
+  // }
 ];
 export default routes;

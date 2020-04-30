@@ -74,6 +74,18 @@ export const profileModify = (user) => {
   };
 
 
+
+
+
+
+
+
+
+
+
+
+//   for employment page
+
   export const employmentAdd= (userEmployment) => {
     return fetch("/api/employment",{
       method: "POST",
@@ -120,3 +132,66 @@ export const profileModify = (user) => {
       .then((res) => res.json())
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+//   for enrollment page
+
+export const enrollmentAdd= (userEnrollment) => {
+    return fetch("/api/enrollment",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEnrollment),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const enrollmentDelete= (userEnrollment) => {
+    return fetch("/api/enrollment",{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEnrollment),
+    })
+      .then((res) => res.json())
+  };
+
+  export const enrollmentUpdate= (userEnrollment) => {
+    return fetch("/api/enrollment",{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userEnrollment),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const enrollmentGetAll= (user) => {
+    return fetch("/api/find_enrollment",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };

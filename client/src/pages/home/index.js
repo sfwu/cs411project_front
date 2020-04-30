@@ -9,10 +9,10 @@ import Sidebar from "../../components/Sidebar/Sidebar.js";
 
 import routes from "./routes.js";
 
-import Index from './homeContent/index';
+import Recommendation from './homeContent/Recommendation';
 import Profile from './homeContent/profile/Profile';
-import Undefined3 from './homeContent/Maps';
 import Register from './homeContent/Register';
+import Enrollment from '../home/homeContent/Enrollment'
 import Employment from './homeContent/Employment';
 import Tables from './homeContent/Tables';
 import Icons from './homeContent/Icons';
@@ -76,9 +76,9 @@ class Home extends React.Component {
           {...this.props}
           routes={routes}
           logo={{
-            innerLink: "/home/index",
-            imgSrc: "",
-            imgAlt: "I AM A PIC"
+            innerLink: "/home/user-profile",
+            imgSrc: require('../../assets/ByteMe/pacman.jpg')
+            // imgAlt: "I AM A PIC"
           }}
         />
         <div className="main-content" ref="mainContent"/>
@@ -87,20 +87,21 @@ class Home extends React.Component {
           </Switch> */}
           <Switch>
           <Route
-            path= "/home/Index"
-            render={() => <Index  NetID = {this.state.NetID} />}
-          />
-          {/* {console.log('hahaha')}
-          {console.log(this.state)} */}
-          <Route
             path= "/home/user-profile"
             render={() => <Profile  NetID = {this.state.NetID} />}
+          />
+          <Route
+            path= "/home/enrollment"
+            render={() => <Enrollment  NetID = {this.state.NetID} />}
           />
           <Route
             path= "/home/employment"
             render={() => <Employment  NetID = {this.state.NetID} />}
           />
-
+          <Route
+            path= "/home/recommendation"
+            render={() => <Recommendation  NetID = {this.state.NetID} />}
+          />
           </Switch>
       </>
     );
