@@ -1,6 +1,8 @@
 import os
 import json
 import datetime
+import recommendations
+import numpy
 from flask import Flask, jsonify , request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -40,109 +42,11 @@ db.init_app(app)
 migrate.init_app(app, db)
 
 
-# engine = create_engine('jobplacement.chbtuwrsaec5.us-east-1.rds.amazonaws.com')
-# connection = engine.raw_connection()
-# cursor = connection.cursor()
-
-# class Users():
-#     """Model for user accounts"""
-#     # We will need to add more things to represent the relationships
-
-#     __tablename__ = 'Users'
-#     # Password = db.Column(db.String(255), nullable=False)
-#     NetID = db.Column(db.String(255), primary_key=True)
-#     FirstName = db.Column(db.String(255), nullable=False)
-#     LastName = db.Column(db.String(255), nullable=False)
-#     Email = db.Column(db.String(255), nullable=False)
-
-#     def __init__(self, FirstName, LastName, Email):
-#         self.FirstName = FirstName
-#         self.LastName = LastName
-#         # self.Password = Password
-#         self.Email = Email
-
-#     def __repr__(self):
-#         return "<Person_id {}>".format(self.NetID)
-
-
 @app.route('/')
 def my_index():
     return "hello"
 
-# @app.route("/api/test_find_em/<id>", methods=['GET'])
-# def test_find_em(id):
-
-#     # print("enter find_user function")
-#     # Info = request.get_json()
-#     # print(Info)
-#     # if not name:
-#     #     return {"status": 400, "message": "Invalid body"}
-#     # # person_id = Info.get("NetID")
-#     # person_id = name
-#     # if not person_id:
-#     #     return {"status": 400, "message": "Missing field"}
-#     # print(person_id)
-#     # print(type(person_id))
-#     # cur = mysql.connection.cursor()
-#     # cur.execute("SELECT * FROM Users WHERE NetID = ""test1""")
-
-#     # mysql.connection.commit()
-#     # result = {"NetID": person_id}
-
-#     result = db.session.execute(
-#         "SELECT * FROM Users where NetID =:netid",
-#         {"netid": id},
-#     )
-    
-#     # print(result)
-
 #     return jsonify({'result': [dict(row) for row in result]})
-
-
-
-
-
-
-
-
-
-
-
-########### for user progile ############
-
-
-# @app.route("/api/find_user", methods=['GET'])
-# def find_user():
-#     print("enter find_user function")
-#     # cur = mysql.connection.cursor()
-#     # cur.execute("SELECT * FROM Users WHERE NetID = ""test1""")
-
-#     # mysql.connection.commit()
-#     # result = {"NetID": person_id}
-#     Info = request.get_json()
-#     result = db.session.execute(
-#         "SELECT * FROM Users where NetID = 'test2' "
-#         # {"NetID": person_id},
-#     )
-
-#     # Infos = result.fetchone()
-#     # result.close()
-
-#     return jsonify({'result': [dict(row) for row in result]})
-
-# @app.route("/api/get_all_users", methods=['GET'])
-# def get_all_users():
-
-#     result = db.session.execute(
-#         "SELECT * FROM Users"
-#         # {"NetID": person_id},
-#     )
-#     print("finish query!!!!!!!")
-
-#     return jsonify({'result': [dict(row) for row in result]})
-
-
-
 
 
 
@@ -210,7 +114,10 @@ def profile():
         p1["FirstName"] = p1["Name"].split()[0]
         p1["LastName"] = p1["Name"].split()[1]
         del p1["Name"]
-        
+       
+        for key,val in p1.items():
+            p1[key] = str(val or '')
+            
         
         # profile1 = result1.fetchone()
         # result1.close()
@@ -229,7 +136,6 @@ def profile():
         
         # profile = dict(list(p1.items()) + list(profile2.items()))
         
-
         result.close()
 
         return {"status": 200, "message": "Profile found", "profile": p1}
@@ -246,8 +152,8 @@ def profile():
         )
 
         result2 = db.session.execute(
-            " UPDATE Profile SET State =:state, City =:city, Address=:address WHERE StudentId =:studentId",
-            {"studentId": Info["NetID"], "state": Info["State"], "city": Info["City"], "address": Info["Address"]}
+            " UPDATE Profile SET State =:state, City =:city, Address=:address, PostalCode=:postalcode, AboutMe=:aboutme WHERE StudentId =:studentId",
+            {"studentId": Info["NetID"], "state": Info["State"], "city": Info["City"], "address": Info["Address"], "postalcode": Info["PostalCode"], "aboutme": Info["AboutMe"]}
             # {"NetID": person_id},
         )
 
@@ -276,6 +182,7 @@ def find_employment():
     his_dict = []
     i = 0
     for history in all_history:
+
         if history["StartDate"]:
             datetime = history["StartDate"]
             date2str=datetime.strftime("%Y-%m-%d")
@@ -284,6 +191,10 @@ def find_employment():
             datetime = history["EndDate"]
             date2str=datetime.strftime("%Y-%m-%d")
             history["EndDate"] = date2str
+
+        for key,val in history.items():
+            history[key] = str(val or '')
+
         his_list["id"] = i
         his_list["value"] = history
         his_dict.append(his_list.copy())
@@ -391,7 +302,8 @@ def find_enrollment():
     enroll_dict = []
     i = 0
     for history in all_list:
-        
+        for key,val in history.items():
+            history[key] = str(val or '')
         enroll_list["id"] = i
         enroll_list["value"] = history
         enroll_dict.append(enroll_list.copy())
@@ -440,8 +352,89 @@ def enrollment():
         db.session.commit()
         return {"status": 204, "message": "Enrollments deleted"}
 
+@app.route("/api/recommendJob", methods=['POST'])
+def recommendJob():
+    Info = request.get_json()
+    n = int(Info["numCluster"])
+    slist = recommendations.similar_students(Info["NetID"],n)
+    # slist = recommendations.similar_students(id,4)
+    slist = numpy.concatenate(slist, axis=0 )
+    # print(slist)
 
-########### for employment history ############
+    job_list = []
+    job_dic = {}
+    i = 0
+    for sid in slist:
+        result = db.session.execute(
+            "SELECT Position, OfficeName as CompanyName, OfficeCity as CompanyCity From Employment Where StudentId =:netid",
+            {"netid":str(sid)}
+        )
+
+        inter_list = result.fetchall()
+
+        all_list = [dict(row) for row in inter_list]
+
+        
+        for history in all_list:
+            job_dic["id"] = i
+            job_dic["value"] = history
+            job_list.append(job_dic.copy())
+            i = i+1
+
+    result.close()
+    print(job_list)
+    return {"status": 200, "message": "jobs found", "jobs": job_list}
+
+@app.route("/api/recommendCourse", methods=['POST'])
+def recommendCourse():
+    Info = request.get_json()
+    industry = Info["Industry"]
+    position = Info["Position"]
+    # position = 'Software Engineer Intern' 
+    n = int(Info["numCourse"])
+    if industry != 'Select Industry':
+        clist = recommendations.courses_for_industry(industry,n)
+        print(clist)
+
+    if industry == 'Select Industry' and position != 'Select Position':
+        clist = recommendations.courses_for_position(position,n)
+        print(clist)
+
+    if industry == 'Select Industry' and position == 'Select Position':
+        return {"status": 400, "message": "Missing field", "courses": []}
+
+
+    course_list = []
+    course_dic = {}
+    i = 0
+    if not clist:
+        return {"status": 400, "message": "No recommendations", "courses": []}
+    for cid in clist:
+        num = cid.split()[1]
+        dep = cid.split()[0]
+        result = db.session.execute(
+            "SELECT CourseTitle From Enrollments Where CourseNum =:coursenum and Department =:department",
+            {"coursenum":num, "department":dep}
+        )
+
+        inter_list = result.fetchall()
+
+        all_list = [dict(row) for row in inter_list]
+
+                
+        for history in all_list:
+            course_dic["id"] = i
+            history["Course"] = cid
+            course_dic["value"] = history
+            course_list.append(course_dic.copy())
+            i = i+1
+
+    result.close()
+    print(course_list)
+    return {"status": 200, "message": "courses found", "courses": course_list}
+
+
+
 
 
 

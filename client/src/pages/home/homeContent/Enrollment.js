@@ -319,7 +319,7 @@ async handleGetAllEnrollments(e){
                   className="form-control-label"
                   htmlFor="input-username"
                 >
-                  CourseNum (Required)
+                  Department (Required)
                 </label>
                 <br />
               <ButtonDropdown isOpen={this.state.dropDownOpen} toggle={this.handleDropDown}>
@@ -363,40 +363,40 @@ async handleGetAllEnrollments(e){
 
         
 
-          <Row>
+          <Row xs="3"> 
 
-          <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleAdd}
-                        size="sm"
-                      >
-                        Add
-                      </Button>
-                    </Col>
+          <Col className="text-right" xs="8">
+            <Button
+              color="primary"
+              href="#pablo"
+              onClick={this.handleAdd}
+              size="sm"
+            >
+              Add
+            </Button>
+          </Col>
 
-                    <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleDelete}
-                        size="sm"
-                      >
-                        Delete
-                      </Button>
-                    </Col>
+          <Col  className="text-right" xs="2">
+            <Button
+              color="primary"
+              href="#pablo"
+              onClick={this.handleDelete}
+              size="sm"
+            >
+              Delete
+            </Button>
+          </Col>
 
-                    <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleUpdate}
-                        size="sm"
-                      >
-                        Update
-                      </Button>
-                    </Col>
+          <Col className="text-right" xs="2" >
+            <Button
+              color="primary"
+              href="#pablo"
+              onClick={this.handleUpdate}
+              size="sm"
+            >
+              Update
+            </Button>
+          </Col>
           </Row>
 
 

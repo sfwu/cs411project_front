@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Recommendation from '../pages/home/homeContent/Recommendation';
 
 
 export const login = user => {
@@ -146,7 +147,7 @@ export const profileModify = (user) => {
 
 
 
-  
+
 
 //   for enrollment page
 
@@ -195,3 +196,68 @@ export const enrollmentAdd= (userEnrollment) => {
     })
       .then((res) => res.json())
   };
+
+
+
+
+
+
+
+
+
+
+
+
+//   for job Recommendation
+
+export const getJobs = (user) => {
+    return fetch("/api/recommendJob",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+
+
+  //   for Course Recommendation (Industry)
+
+export const getCourse_Ind = (user) => {
+    return fetch("/api/recommendCourse_Industry",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+
+
+  //   for Course Recommendation (Position)
+
+export const getCourse_Pos = (user) => {
+    return fetch("/api/recommendCourse_Position",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+
+
+  export const getCourse = (user) => {
+    return fetch("/api/recommendCourse",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+  };
+  

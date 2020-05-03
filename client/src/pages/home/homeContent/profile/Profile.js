@@ -93,7 +93,7 @@ export default class Profile extends React.Component {
             City: userInfo.profile.City,
             PostalCode: userInfo.profile.PostalCode,
             State: userInfo.profile.State,
-            Country: userInfo.profile.Country,
+            // Country: userInfo.profile.Country,
           })
     }
     console.log(this.state)
@@ -113,7 +113,7 @@ export default class Profile extends React.Component {
       City: this.state.City,
       PostalCode: this.state.PostalCode,
       State: this.state.State,
-      Country: this.state.Country,
+      // Country: this.state.Country,
     }
 
     const response = await profileUpdate(user);
@@ -322,14 +322,14 @@ export default class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Country
+                              State
                             </label>
                             <Input
                               className="form-control-alternative"
                               placeholder="United States"
-                              value = {this.state.Country}
+                              value = {this.state.State}
                               onChange={this.onChange}
-                              name="Country"
+                              name="State"
                               type="text"
                             />
                           </FormGroup>

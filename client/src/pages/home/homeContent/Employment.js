@@ -463,38 +463,38 @@ async handleGetAllHistory(e){
 
           <Row>
 
-          <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleAdd}
-                        size="sm"
-                      >
-                        Add
-                      </Button>
-                    </Col>
+              <Col className="text-right" xs="8">
+                <Button
+                  color="primary"
+                  href="#pablo"
+                  onClick={this.handleAdd}
+                  size="sm"
+                >
+                  Add
+                </Button>
+              </Col>
 
-                    <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleDelete}
-                        size="sm"
-                      >
-                        Delete
-                      </Button>
-                    </Col>
+              <Col className="text-right" xs="2">
+                <Button
+                  color="primary"
+                  href="#pablo"
+                  onClick={this.handleDelete}
+                  size="sm"
+                >
+                  Delete
+                </Button>
+              </Col>
 
-                    <Col className="text-right" xs="3">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={this.handleUpdate}
-                        size="sm"
-                      >
-                        Update
-                      </Button>
-                    </Col>
+              <Col className="text-right" xs="2">
+                <Button
+                  color="primary"
+                  href="#pablo"
+                  onClick={this.handleUpdate}
+                  size="sm"
+                >
+                  Update
+                </Button>
+              </Col>
           </Row>
 
 
