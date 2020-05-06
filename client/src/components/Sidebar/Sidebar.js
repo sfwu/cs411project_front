@@ -100,6 +100,7 @@ class Sidebar extends React.Component {
         className="navbar-vertical fixed-left navbar-light bg-white"
         expand="md"
         id="sidenav-main"
+        // color="white"
       >
         <h6 className="navbar-heading text-muted">ByteMe</h6>
         <Container fluid>
@@ -124,31 +125,10 @@ class Sidebar extends React.Component {
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
-                <i className="ni ni-bell-55" />
-              </DropdownToggle>
-              <DropdownMenu
-                aria-labelledby="navbar-default_dropdown_1"
-                className="dropdown-menu-arrow"
-                right
-              >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
-              </DropdownMenu>
+
             </UncontrolledDropdown>
             <UncontrolledDropdown nav>
-              <DropdownToggle nav>
-                <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                    />
-                  </span>
-                </Media>
-              </DropdownToggle>
+
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>

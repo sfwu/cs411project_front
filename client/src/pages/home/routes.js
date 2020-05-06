@@ -1,10 +1,7 @@
-import Recommendation from './homeContent/Recommendation';
+import Recommendation from './homeContent/recommendation/Recommendation';
 import Profile from './homeContent/profile/Profile';
-import Enrollment from './homeContent/Enrollment';
-import Register from './homeContent/Register';
-import Employment from './homeContent/Employment';
-import Tables from './homeContent/Tables';
-import Icons from './homeContent/Icons';
+import Enrollment from './homeContent/enrollment/Enrollment';
+import Employment from './homeContent/employment/Employment';
 
 var routes = [
   {
@@ -17,7 +14,7 @@ var routes = [
   {
     path: "/enrollment",
     name: "Course Enrollment",
-    icon: "ni ni-pin-3 text-orange",
+    icon: "ni ni-hat-3 text-orange ",
     component: Enrollment,
     layout: "/home"
   },
@@ -25,21 +22,21 @@ var routes = [
 
     path: "/employment",
     name: "Employment History",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-world text-info",
     component: Employment,
     layout: "/home"
   },
   {
     path: "/recommendation",
     name: "Job Recommend",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "ni ni-user-run text-red",
     component: Recommendation,
     layout: "/home"
   },
   {
     path: "/",
     name: "Login",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "ni ni-sound-wave text-primary",
     // component: Tables,
     layout: ""
   },

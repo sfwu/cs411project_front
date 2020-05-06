@@ -24,7 +24,7 @@ class JobCardBody extends React.Component{
     render () {
         return(
             <>
-                <CardBody>
+                {/* <CardBody>
                 <Table dark>
                     <thead>
                         <tr>
@@ -43,7 +43,11 @@ class JobCardBody extends React.Component{
                         </tr>
                     </tbody>
                     </Table>
-                </CardBody>
+                </CardBody> */}
+
+                        <td>{this.props.jobInfo.Position}</td>
+                        <td>{this.props.jobInfo.CompanyName}</td>
+                        <td>{this.props.jobInfo.CompanyCity}</td>
             </>
         )
     }

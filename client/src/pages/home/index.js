@@ -3,19 +3,16 @@ import { Route, Switch, useLocation } from "react-router-dom";
 // reactstrap components
 import { setState } from "react";
 // core components
-import AdminNavbar from "../../components/Navbars/AdminNavbar.js";
-import AdminFooter from "../../components/Footers/AdminFooter.js";
 import Sidebar from "../../components/Sidebar/Sidebar.js";
 
 import routes from "./routes.js";
 
-import Recommendation from './homeContent/Recommendation';
+import Recommendation from './homeContent/recommendation/Recommendation';
 import Profile from './homeContent/profile/Profile';
-import Register from './homeContent/Register';
-import Enrollment from '../home/homeContent/Enrollment'
-import Employment from './homeContent/Employment';
-import Tables from './homeContent/Tables';
-import Icons from './homeContent/Icons';
+import Enrollment from './homeContent/enrollment/Enrollment'
+import Employment from './homeContent/employment/Employment';
+import './index.css'
+
 
 
 
@@ -71,7 +68,7 @@ class Home extends React.Component {
   render() {
 
     return (
-      <>
+      <div className='page'>
         <Sidebar
           {...this.props}
           routes={routes}
@@ -103,7 +100,7 @@ class Home extends React.Component {
             render={() => <Recommendation  NetID = {this.state.NetID} />}
           />
           </Switch>
-      </>
+      </div>
     );
   }
 }

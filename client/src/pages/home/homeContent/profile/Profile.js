@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import { profileModify, profileUpdate } from '../../../../components/userFunction'
+import './profile.css'
 
 //deal with nodejs
 
@@ -122,19 +123,19 @@ export default class Profile extends React.Component {
   render() {
 
     return (
-      <>
+      <div>
       {/* {console.log('this is profile 0 ')}
       {console.log(this.props.NetID)}
       {console.log('this is profile 1 ')} */}
       <div className="profile_page">
         {/* <UserHeader /> */}
-        <Container >
+        <Container className='mainContent-profile' >
           <Row>
 
             <Col className="order-xl-1" xl="10">
-              <Card className="bg-secondary shadow">
+              <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}} >
 
-                <CardHeader className="bg-white border-0">
+                <CardHeader >
                   <Row className="align-items-center">
                     <Col xs="5">
                       <h3 className="mb-0">My account NetID:{this.props.NetID}</h3>
@@ -162,7 +163,7 @@ export default class Profile extends React.Component {
                     </Col>
                   </Row>
                 </CardHeader>
-                <CardBody>
+                <CardBody >
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
                       User information
@@ -381,7 +382,7 @@ export default class Profile extends React.Component {
         </Container>
       
       </div>
-      </>
+      </div>
     );
   }
 }

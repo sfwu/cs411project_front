@@ -1,6 +1,5 @@
-
 import React from "react";
-
+import './Employment.css';
 // reactstrap components
 import {
   Button,
@@ -15,11 +14,12 @@ import {
   InputGroup,
   Row,
   Container,
+  Table,
   Col
 } from "reactstrap";
 
-import EmploymentCardBody from '../../../components/employmentCard'
-import { employmentAdd, employmentGetAll, employmentDelete, employmentUpdate } from '../../../components/userFunction'
+import EmploymentCardBody from '../../../../components/employmentCard'
+import { employmentAdd, employmentGetAll, employmentDelete, employmentUpdate } from '../../../../components/userFunction'
 
 class Employment extends React.Component {
 
@@ -39,35 +39,7 @@ class Employment extends React.Component {
       CompanyCountry: '',
       CompanyAddress: '',
       Industry: '',
-      employmentlist: [
-        // {
-        //   id: 0,
-        //   value: {
-        //     Position: 'aaa',
-        //     StartDate: 'aaa',
-        //     EndDate: 'aaa',
-        //     CompanyName: 'aaa',
-        //     CompanyCity: 'aaa',
-        //     CompanyState: 'aaa',
-        //     CompanyCountry: 'aaa',
-        //     CompanyAddress: 'aaa',
-        //     Industry: 'aaa',
-        //   }
-        // }, {
-        //   id: 1,
-        //   value: {
-        //     Position: 'bbb',
-        //     StartDate: 'bbb',
-        //     EndDate: 'bbb',
-        //     CompanyName: 'bbb',
-        //     CompanyCity: 'bbb',
-        //     CompanyState: 'bbb',
-        //     CompanyCountry: 'bbb',
-        //     CompanyAddress: 'bbb',
-        //     Industry: 'bbb',
-        //   }
-        // }
-      ]
+      employmentlist: []
     }
       this.onChange = this.onChange.bind(this)
       this.handleAdd = this.handleAdd.bind(this)
@@ -81,34 +53,59 @@ class Employment extends React.Component {
 
   // display all the history
   // note that the history need to be fetch by handleGetAllHistory
+  // getAllHistory = (employmentlist) => {
+  //   return employmentlist.map(({id, value}) => {
+  //       return (
+  //         <Card >
+  //           <CardHeader className="bg-white border-0">
+  //                   <Row className="align-items-center">
+  //                       <Col xs="5">
+  //                           <h3 className="mb-0">Employment History {id}</h3>
+  //                       </Col>
+                        
+  //                       <Col className="text-right" xs="5">
+  //                           <Button
+  //                               color="primary"
+  //                               href="#pablo"
+  //                               id = {id}
+  //                               // onClick={this.handleModify(id)}
+  //                               onClick = {this.handleModify}
+  //                               size="sm"
+  //                           >
+  //                               Modify
+  //                           </Button>
+  //                   </Col>
+  //                   </Row>
+  //                   </CardHeader>
+  //         <EmploymentCardBody
+  //           employmentInfo = {value}
+  //         />
+  //         </Card>
+  //       )
+  //   })
+  // }
+
   getAllHistory = (employmentlist) => {
     return employmentlist.map(({id, value}) => {
         return (
-          <Card >
-            <CardHeader className="bg-white border-0">
-                    <Row className="align-items-center">
-                        <Col xs="5">
-                            <h3 className="mb-0">Employment History {id}</h3>
-                        </Col>
-                        
-                        <Col className="text-right" xs="5">
-                            <Button
-                                color="primary"
-                                href="#pablo"
-                                id = {id}
-                                // onClick={this.handleModify(id)}
-                                onClick = {this.handleModify}
-                                size="sm"
-                            >
-                                Modify
-                            </Button>
-                    </Col>
-                    </Row>
-                    </CardHeader>
-          <EmploymentCardBody
-            employmentInfo = {value}
-          />
-          </Card>
+          <tr>
+            <EmploymentCardBody
+              employmentInfo = {value}
+            />
+            <td> 
+
+                <Button
+                color="primary"
+                href="#pablo"
+                id = {id}
+                // onClick={this.handleModify(id)}
+                onClick = {this.handleModify}
+                size="sm"
+            >
+                Modify
+            </Button>
+            </td>
+          </tr>
         )
     })
   }
@@ -242,13 +239,13 @@ async handleGetAllHistory(e){
 
   render() {
     return (
-        <>
+        <div className = 'mainPage' >
          
            
-        <Container >
+        <Container className = 'mainContent'>
         <Row>
         <Col className="order-xl-1" xl="10">
-          <Card className="bg-secondary shadow">
+          <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
           
           <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -504,18 +501,62 @@ async handleGetAllHistory(e){
           </Card>
           </Col>
           </Row>
-        </Container>
+        {/* </Container> */}
         
         
 
+        <br />
+        <br />
 
-
-        <Container >
+        {/* <Container className = "showContent">
           <Row className="align-items-center">
             {this.getAllHistory(this.state.employmentlist)}
           </Row>
+        </Container> */}
+
+
+        {/* <Container className = "showContent"> */}
+        <Row>
+        <Col className="order-xl-1" xl="10">
+          <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}> 
+          <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                        <Col xs="3">
+                           <h3 className="mb-0">Employment History</h3>
+                        </Col>
+                        
+                     </Row>
+          </CardHeader>
+
+          <CardBody>
+            <div className="employmentTable"> 
+              <Table >
+                  <thead>
+                      <tr>
+                      <th>Position</th>
+                      <th>StartDate</th>
+                      <th>EndDate</th>
+                      <th>Companey Name</th>
+                      <th>Industry</th>
+                      <th> City</th>
+                      <th> State</th>
+                      <th> Country</th>
+                      <th> Address</th>
+                      <th> Change</th>
+
+                      </tr>
+                  </thead>
+                  <tbody>
+                  {this.getAllHistory(this.state.employmentlist)}
+                  </tbody>
+                  </Table>
+                  </div>
+              </CardBody>
+          </Card>
+          </Col>
+          </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }

@@ -24,7 +24,7 @@ class CourseCardBody extends React.Component{
     render () {
         return(
             <>
-                <CardBody>
+                {/* <CardBody>
                 <Table dark>
                     <thead>
                         <tr>
@@ -42,7 +42,10 @@ class CourseCardBody extends React.Component{
                         </tr>
                     </tbody>
                     </Table>
-                </CardBody>
+                </CardBody> */}
+
+                        <td>{this.props.courseInfo.Course}</td>
+                        <td>{this.props.courseInfo.CourseTitle}</td>
             </>
         )
     }

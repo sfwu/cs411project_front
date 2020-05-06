@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Recommendation.css"
 import {
   Button,
   Card,
@@ -21,11 +21,12 @@ import {
   DropdownMenu, 
   DropdownItem,
   ButtonDropdown,
+  Table,
 } from "reactstrap";
 
-import {getJobs, getCourse_Ind, getCourse_Pos, getCourse} from "../../../components/userFunction"
-import JobCardBody from '../../../components/jobCard'
-import CourseCardBody from '../../../components/courseCard'
+import {getJobs, getCourse_Ind, getCourse_Pos, getCourse} from "../../../../components/userFunction"
+import JobCardBody from '../../../../components/jobCard'
+import CourseCardBody from '../../../../components/courseCard'
 
 class Recommendation extends React.Component {
 
@@ -158,21 +159,9 @@ handleDropDown1(e) {
   getAllJobs= (jobList) => {
     return jobList.map(({id, value}) => {
         return (
-          <Card >
-            <CardHeader className="bg-white border-0">
-                    <Row className="align-items-center">
-                        <Col xs="5">
-                            <h3 className="mb-0">Recommended Job {id}</h3>
-                        </Col>
-                    
-                    
-
-                    <Col className="text-right" xs="5">
-                    </Col>
-                    </Row>
-                    </CardHeader>
+          <tr> 
           <JobCardBody jobInfo = {value} />
-          </Card>
+          </tr>
         )
     })
   }
@@ -196,21 +185,11 @@ handleDropDown1(e) {
   getAllCourses= (courseList) => {
     return courseList.map(({id, value}) => {
         return (
-          <Card >
-            <CardHeader className="bg-white border-0">
-                    <Row className="align-items-center">
-                        <Col xs="10">
-                            <h3 className="mb-0">Recommended Course {id}</h3>
-                        </Col>
-
-                        <Col className="text-right" xs="5">
-                    </Col>
-                    </Row>
-                    </CardHeader>
+          <tr>
           <CourseCardBody
             courseInfo = {value}
           />
-          </Card>
+          </tr>
         )
     })
   }
@@ -225,10 +204,10 @@ handleDropDown1(e) {
     return (
      <>
      {/* first do jobs */}
-     <Container >
+     <Container className='mainContent1'>
         <Row>
         <Col className="order-xl-1" xl="10">
-          <Card className="bg-secondary shadow">
+          <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
           
           <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -236,7 +215,7 @@ handleDropDown1(e) {
                       <h3 className="mb-0">Job Recommendation, NetID: {this.props.NetID}</h3>
                     </Col>
                   </Row>
-
+                  </CardHeader>
                   <CardBody>
                     <CardTitle>
                       Hello there! Are you looking for jobs? Fill you profile and add any Employment and Enrollment historeis. 
@@ -284,15 +263,46 @@ handleDropDown1(e) {
                       </Col>
                       </Row>
                 </CardBody>
-          </CardHeader>
+          
           </Card>
           </Col>
           </Row>
         </Container>
 
-        <Container >
-          <Row className="align-items-center">
-            {this.getAllJobs(this.state.jobList)}
+        <br />
+        <br />
+
+        <Container className='showContent1'>
+        <Row>
+        <Col className="order-xl-1" xl="10">
+        <Card  style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
+            <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                        <Col xs="5">
+                            <h3 className="mb-0">Recommended Job</h3>
+                        </Col>
+                    </Row>
+              </CardHeader>
+          
+              <CardBody>
+                <div className='jobTable'> 
+                <Table >
+                    <thead>
+                        <tr>
+                        <th>Position</th>
+                        <th>Companey Name</th>
+                        <th>Companey City</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.getAllJobs(this.state.jobList)}
+                    </tbody>
+                    </Table>
+                    </div>
+                </CardBody>
+          </Card>
+          </Col>
           </Row>
         </Container>
 
@@ -303,10 +313,10 @@ handleDropDown1(e) {
       <br />
 
 
-     <Container >
+     <Container className='mainContent1'>
      <Row>
         <Col className="order-xl-1" xl="10">
-          <Card className="bg-secondary shadow">
+          <Card  style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
           
           <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -314,7 +324,7 @@ handleDropDown1(e) {
                       <h3 className="mb-0">Course Recommendation</h3>
                     </Col>
                   </Row>
-
+          </CardHeader>
                   <CardBody>
                     <CardTitle>
                       Did not see the jobs you are looking for? 
@@ -427,17 +437,46 @@ handleDropDown1(e) {
 
 
                 </CardBody>
-          </CardHeader>
+
           </Card>
           </Col>
           </Row>
      </Container>
 
+     <br />        
+     <br />                  
 
+     <Container className='showContent2'>
+     <Row>
+      <Col className="order-xl-1" xl="10">                          
+     <Card  style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
+            <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                        <Col xs="10">
+                            <h3 className="mb-0">Recommended Course</h3>
+                        </Col>
 
-     <Container >
-          <Row className="align-items-center">
-            {this.getAllCourses(this.state.courseList)}
+            </Row>
+            </CardHeader>
+          <CardBody>
+                <div className='courseTable'> 
+                <Table >
+                    <thead>
+                        <tr>
+
+                        <th>Course Number</th>
+                        <th>Course Title</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.getAllCourses(this.state.courseList)}
+                    </tbody>
+                    </Table>
+                  </div>
+                </CardBody>
+          </Card>
+          </Col>
           </Row>
         </Container>
      </>

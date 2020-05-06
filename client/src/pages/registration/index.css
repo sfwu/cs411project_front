@@ -1,6 +1,6 @@
 .r_main {
     text-align: center;
-    background-color: #282c34;
+    /* background-color: #282c34; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -8,12 +8,22 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+
+    background-image: url("../../assets/img/background/login.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
   
 .r_title{
 position: absolute;
 top: 70px;
-color: pink;
+color: lightblue;
 font-size: 40px;
 }
 

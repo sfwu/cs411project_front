@@ -1,0 +1,36 @@
+.mainContent1{
+    position: relative;
+    top:2vh;
+    /* left: 3%; */
+}
+
+.mainContent2{
+    position: relative;
+    /* left: 3%; */
+}
+
+
+
+.showContent1{
+    position: relative;
+    /* left: 3%; */
+}
+
+.showContent2{
+    position: relative;
+    /* left: 3%; */
+}
+
+.jobTable{
+    max-width: 900px;
+    overflow-x: auto;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.courseTable{
+    max-width: 900px;
+    overflow-x: auto;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.4);
+}

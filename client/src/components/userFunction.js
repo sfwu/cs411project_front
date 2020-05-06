@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Recommendation from '../pages/home/homeContent/Recommendation';
+// import Recommendation from '../pages/home/homeContent/recommendation/Recommendation';
 
 
 export const login = user => {

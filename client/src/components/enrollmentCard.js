@@ -24,7 +24,7 @@ class EnrollmentCardBody extends React.Component{
     render () {
         return(
             <>
-                    <CardBody>
+                    {/* <CardBody >
                     <Table dark>
                         <thead>
                             <tr>
@@ -43,8 +43,13 @@ class EnrollmentCardBody extends React.Component{
                             </tr>
                         </tbody>
                         </Table>
-                    </CardBody>
-                {/* </Card> */}
+                    </CardBody> */}
+
+                    <td>{this.props.enrollmentInfo.CourseTitle}</td>
+                    <td>{this.props.enrollmentInfo.Department}</td>
+                    <td>{this.props.enrollmentInfo.CourseNum}</td>
+
+
             </>
         )
     }

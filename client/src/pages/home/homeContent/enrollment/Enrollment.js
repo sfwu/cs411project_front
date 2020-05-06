@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import './Enrollment.css'
 // reactstrap components
 import {
   Button,
@@ -20,10 +20,11 @@ import {
   DropdownToggle, 
   DropdownMenu, 
   DropdownItem,
+  Table,
 } from "reactstrap";
 
-import EmploymentCardBody from '../../../components/enrollmentCard'
-import { enrollmentAdd, enrollmentDelete, enrollmentUpdate, enrollmentGetAll } from '../../../components/userFunction'
+import EmploymentCardBody from '../../../../components/enrollmentCard'
+import { enrollmentAdd, enrollmentDelete, enrollmentUpdate, enrollmentGetAll } from '../../../../components/userFunction'
 
 class Enrollment extends React.Component {
 
@@ -104,33 +105,57 @@ hendleDropDownChangeValue(e) {
 
   // display all the history
   // note that the history need to be fetch by handleGetAllEnrollments
+  // getAllHistory = (enrollmentlist) => {
+  //   return enrollmentlist.map(({id, value}) => {
+  //       return (
+  //         <Card >
+  //           <CardHeader className="bg-white border-0">
+  //                   <Row className="align-items-center">
+  //                       <Col xs="5">
+  //                           <h3 className="mb-0">Enrollments {id}</h3>
+  //                       </Col>
+                        
+  //                       <Col className="text-right" xs="5">
+  //                           <Button
+  //                               color="primary"
+  //                               href="#pablo"
+  //                               id = {id}
+  //                               onClick = {this.handleModify}
+  //                               size="sm"
+  //                           >
+  //                               Modify
+  //                           </Button>
+  //                   </Col>
+  //                   </Row>
+  //                   </CardHeader>
+  //         <EmploymentCardBody
+  //           enrollmentInfo = {value}
+  //         />
+  //         </Card>
+  //       )
+  //   })
+  // }
+
+
   getAllHistory = (enrollmentlist) => {
     return enrollmentlist.map(({id, value}) => {
         return (
-          <Card >
-            <CardHeader className="bg-white border-0">
-                    <Row className="align-items-center">
-                        <Col xs="5">
-                            <h3 className="mb-0">Enrollments {id}</h3>
-                        </Col>
-                        
-                        <Col className="text-right" xs="5">
-                            <Button
-                                color="primary"
-                                href="#pablo"
-                                id = {id}
-                                onClick = {this.handleModify}
-                                size="sm"
-                            >
-                                Modify
-                            </Button>
-                    </Col>
-                    </Row>
-                    </CardHeader>
+          <tr>
           <EmploymentCardBody
             enrollmentInfo = {value}
           />
-          </Card>
+            <td> 
+              <Button
+                    color="primary"
+                    href="#pablo"
+                    id = {id}
+                    onClick = {this.handleModify}
+                    size="sm"
+                >
+                    Modify
+                </Button>
+            </td>
+          </tr>
         )
     })
   }
@@ -240,18 +265,18 @@ async handleGetAllEnrollments(e){
 
   render() {
     return (
-        <>
+        <div className = "page">
          
            
-        <Container >
+        <Container className = "mainContent">
         <Row>
         <Col className="order-xl-1" xl="10">
-          <Card className="bg-secondary shadow">
+          <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
           
           <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="5">
-                      <h3 className="mb-0">My Employment history, NetID: {this.props.NetID}</h3>
+                      <h3 className="mb-0">My Course Enrollment, NetID: {this.props.NetID}</h3>
                     </Col>
                     
                     <Col className="text-right" xs="5">
@@ -298,23 +323,6 @@ async handleGetAllEnrollments(e){
           <Row>
             <Col xs="5">
             
-              {/* <FormGroup>
-                <label
-                  className="form-control-label"
-                  htmlFor="input-username"
-                >
-                  Department
-                </label>
-                <Input
-                  className="form-control-alternative"
-                  // id="input-username"
-                  type="text"
-                  name = 'Department'
-                  value={this.state.Department}
-                  onChange={this.onChange}
-                />
-              
-              </FormGroup> */}
               <label
                   className="form-control-label"
                   htmlFor="input-username"
@@ -409,15 +417,44 @@ async handleGetAllEnrollments(e){
         </Container>
         
         
+        <br />
+        <br />
 
 
+        <Container className = "showContent">
+        <Row>
+        <Col className="order-xl-1" xl="10">
+        <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)'}}>
+            <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                        <Col xs="2">
+                            <h3 className="mb-0">Enrollments</h3>
+                        </Col>
+                    </Row>
+                    </CardHeader>
+              <CardBody >
+                <div className='EnrollmentTable'> 
+                    <Table>
+                        <thead>
+                            <tr>
+                            <th>Course Title</th>
+                            <th>Department</th>
+                            <th>Course Number</th>
+                            <th> Change</th>
 
-        <Container >
-          <Row className="align-items-center">
-            {this.getAllHistory(this.state.enrollmentlist)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {this.getAllHistory(this.state.enrollmentlist)}
+                        </tbody>
+                        </Table>
+                        </div>
+                </CardBody>
+          </Card>
+          </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }

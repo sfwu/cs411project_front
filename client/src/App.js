@@ -57,7 +57,7 @@ export default class mainPage extends React.Component {
             Welcome to ByteMe's world!
           </header>
 
-
+          
           <div className = 'welcome-page-inputs'>
             <InputGroup size="lg">
               <InputGroup.Prepend>
